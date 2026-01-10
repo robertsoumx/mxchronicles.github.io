@@ -1,125 +1,114 @@
 /* ========================== */
-/* GOOGLE FONTS (load in HTML) */
+/* GLOBAL STYLES */
 /* ========================== */
-/* In your HTML <head>:
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&family=Lato:wght@400;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-*/
-
-/* ========================== */
-/* RESET / GLOBAL STYLES */
-/* ========================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  font-family: 'Merriweather', Georgia, "Times New Roman", serif;
-  background: #f7f7f5; /* Parchment-style */
-  color: #121212;
-  line-height: 1.75;
+  margin: 0;
+  font-family: 'Merriweather', serif;
+  background: #f9f4ec;
+  color: #2c2c2c;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 2rem auto;
 }
 
 /* ========================== */
-/* HEADER / NAVIGATION */
+/* HEADER / NAV */
 /* ========================== */
 .site-header {
-  border-bottom: 1px solid #ccc;
-  background: #fff;
+  background: #e8dfc4;
   padding: 1rem 0;
+  border-bottom: 2px solid #c9b79c;
   text-align: center;
 }
 
 .masthead {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 2.4rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
 }
 
 .nav-tabs {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .nav-tabs a {
   margin: 0 1rem;
-  font-family: 'Lato', Arial, sans-serif;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  padding-bottom: 0.25rem;
+  font-weight: 600;
+  color: #2c2c2c;
+  border-bottom: 2px solid transparent;
   transition: all 0.2s ease;
 }
 
-.nav-tabs a:hover {
-  border-bottom: 2px solid #121212;
+.nav-tabs a:hover,
+.nav-tabs a.active {
+  border-bottom: 2px solid #2c2c2c;
 }
 
 /* ========================== */
-/* CONTAINER LAYOUT */
-/* ========================== */
-.container {
-  max-width: 1100px;
-  margin: 3rem auto;
-  padding: 0 1.5rem;
-}
-
-/* ========================== */
-/* HOME PAGE GRID */
+/* HOMEPAGE GRID */
 /* ========================== */
 .home-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 
+/* FEATURED ARTICLE */
 .home-feature {
-  grid-column: span 2;
+  background: #fff8f0;
   border: 2px solid #c9b79c;
   padding: 1.5rem;
-  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.home-feature:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .home-feature img {
-  width: 100%;
   margin-top: 1rem;
-  border: 1px solid #c9b79c;
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+  max-height: 200px;
 }
 
+/* STANDARD ARTICLE */
 .home-article {
-  border: 2px solid #c9b79c;
+  background: #fff5eb;
+  border: 1px solid #c9b79c;
   padding: 1rem;
-  background: #fff;
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .home-article:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
 .home-article img {
-  width: 100%;
   margin-top: 0.5rem;
-  border: 1px solid #c9b79c;
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+  max-height: 150px;
 }
 
+/* ARTICLE META & SYNOPSIS */
 .meta {
-  font-family: 'Lato', sans-serif;
   font-size: 0.85rem;
   color: #555;
   margin-bottom: 0.5rem;
@@ -127,134 +116,65 @@ a {
 
 .synopsis {
   font-size: 0.9rem;
-  color: #444;
-  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+/* ========================== */
+/* STAFF PORTAL STYLES */
+/* ========================== */
+#login-section, #admin-panel {
+  background: #fff8f0;
+  border: 2px solid #c9b79c;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   font-family: 'Merriweather', serif;
 }
 
-/* ========================== */
-/* ABOUT PAGE */
-/* ========================== */
-.about-text {
-  max-width: 700px;
-  margin-bottom: 3rem;
-  font-size: 1.05rem;
-}
-
-.staff-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-}
-
-.staff {
-  border-top: 2px solid #000;
-  padding-top: 0.75rem;
-}
-
-.staff-name {
-  font-family: 'Crimson Text', serif;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.staff-role {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.85rem;
-  color: #555;
-}
-
-/* ========================== */
-/* ARTICLES INDEX PAGE */
-/* ========================== */
-.controls {
-  margin-bottom: 2rem;
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.controls input,
-.controls select {
-  padding: 0.4rem;
-  font-size: 0.9rem;
-  font-family: 'Lato', sans-serif;
-}
-
-.article-list-item {
-  padding: 1.2rem 0;
-  border-bottom: 1px solid #ddd;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.article-list-item:hover {
-  background: #f1f0ed;
-}
-
-.article-list-item h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-  margin-bottom: 0.3rem;
-}
-
-/* ========================== */
-/* ARTICLE PAGE (NYT STYLE) */
-/* ========================== */
-.article-nyt {
-  display: grid;
-  grid-template-columns: 1fr minmax(0, 720px) 1fr;
-}
-
-.article-core {
-  grid-column: 2;
-}
-
-.article-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.8rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-.article-meta {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 2rem;
-}
-
-.article-image {
-  margin: 2rem 0;
-}
-
-.article-image img {
-  width: 100%;
+#admin-panel section {
+  background: #fff5eb;
   border: 1px solid #c9b79c;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.article-image figcaption {
+#admin-panel button {
+  padding: 0.5rem 1rem;
+  background: #c9b79c;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
   font-family: 'Lato', sans-serif;
-  font-size: 0.75rem;
-  color: #666;
-  margin-top: 0.3rem;
+  transition: 0.2s ease;
+}
+#admin-panel button:hover {
+  background: #b89b7c;
 }
 
-.article-body p {
-  margin-bottom: 1.5rem;
-  font-size: 1.05rem;
-  font-family: 'Merriweather', serif;
+#admin-panel h2, #admin-panel h3 {
+  font-family: 'Playfair Display', serif;
 }
 
-/* ========================== */
+#admin-panel input, #admin-panel textarea, #admin-panel select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #c9b79c;
+  border-radius: 4px;
+}
+
 /* RESPONSIVE */
-/* ========================== */
-@media (max-width: 900px) {
+@media(max-width: 800px){
   .home-grid {
     grid-template-columns: 1fr;
   }
 
-  .article-nyt {
-    grid-template-columns: 1fr;
+  #login-section, #admin-panel {
+    margin: 1rem;
+    padding: 1rem;
   }
 }

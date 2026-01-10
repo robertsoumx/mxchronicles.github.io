@@ -1,86 +1,154 @@
-/* ---------- BACKGROUND ---------- */
+/* ---------- RESET ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---------- GLOBAL ---------- */
 body {
-  font-family: "Georgia", "Times New Roman", serif;
-  background:
-    linear-gradient(rgba(245,240,230,0.95), rgba(245,240,230,0.95)),
-    url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f");
-  background-size: cover;
-  background-attachment: fixed;
-  color: #2b2b2b;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #f7f7f5;
+  color: #121212;
+  line-height: 1.75;
 }
 
-/* ---------- TYPOGRAPHY ---------- */
-.title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  letter-spacing: 0.12em;
-}
-
-.title.large {
-  font-size: 2.6rem;
-}
-
-.meta {
-  font-size: 0.8rem;
-  opacity: 0.75;
-  margin-top: 0.4rem;
-}
-
-.synopsis {
-  font-size: 0.9rem;
-  margin-top: 0.75rem;
-  line-height: 1.5;
-}
-
-/* ---------- TILE VARIANTS ---------- */
-.tile {
-  background: #fff;
-  border: 2px solid #c9b79c;
-  padding: 1.75rem;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tile:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-.tile.featured {
-  grid-column: span 2;
-  min-height: 360px;
-  color: white;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.tile.featured::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-}
-
-.tile.featured > * {
-  position: relative;
-}
-
-/* ---------- GRID ---------- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
+a { color: inherit; text-decoration: none; }
 
 /* ---------- HEADER ---------- */
-header.home {
-  background: linear-gradient(90deg, #6a3d2f, #8b5a2b);
-  color: white;
-  padding: 2rem;
-  border-bottom: 4px solid #c9b79c;
+.site-header {
+  border-bottom: 1px solid #ccc;
+  background: white;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.masthead {
+  font-size: 2.4rem;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+}
+
+.nav-tabs {
+  margin-top: 0.75rem;
+}
+
+.nav-tabs a {
+  margin: 0 1rem;
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.nav-tabs a:hover {
+  border-bottom: 2px solid #121212;
+}
+
+/* ---------- LAYOUT ---------- */
+.container {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+}
+
+/* ---------- ARTICLE VIEW (NYT STYLE) ---------- */
+.article-nyt {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 720px) 1fr;
+}
+
+.article-core {
+  grid-column: 2;
+}
+
+.article-title {
+  font-size: 2.8rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.article-meta {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.article-image {
+  margin: 2rem 0;
+}
+
+.article-image img {
+  width: 100%;
+}
+
+.article-image figcaption {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 0.3rem;
+}
+
+.article-body p {
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+}
+
+/* ---------- HOME ---------- */
+.home-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.home-feature h2 {
+  font-size: 2rem;
+}
+
+.home-feature p {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* ---------- ABOUT ---------- */
+.about-text {
+  max-width: 700px;
+  margin-bottom: 3rem;
+}
+
+.staff-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.staff {
+  border-top: 2px solid #000;
+  padding-top: 0.75rem;
+}
+
+.staff-name {
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.staff-role {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+/* ---------- ARTICLES INDEX ---------- */
+.controls {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.controls input, .controls select {
+  padding: 0.4rem;
+}
+
+.article-list-item {
+  padding: 1.2rem 0;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.article-list-item h3 {
+  font-size: 1.3rem;
 }

@@ -2,28 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Article · MX Chronicles</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Articles · MX Chronicles</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JS -->
   <script src="articles.js" defer></script>
   <script src="script.js" defer></script>
 </head>
+<body onload="renderArticles()">
 
-<body onload="loadArticle()">
-<header class="site-header">…</header>
+  <!-- HEADER / NAV -->
+  <header class="site-header">
+    <div class="masthead">MX Chronicles</div>
+    <nav class="nav-tabs">
+      <a href="index.html">Home</a>
+      <a href="articles.html">Articles</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
 
-<main class="container article-nyt">
-  <article class="article-core">
-    <h1 class="article-title" id="article-title"></h1>
-    <div class="article-meta" id="article-meta"></div>
+  <!-- MAIN CONTENT -->
+  <main class="container">
 
-    <figure class="article-image">
-      <img id="article-image">
-      <figcaption id="article-caption"></figcaption>
-    </figure>
+    <!-- SEARCH & SORT CONTROLS -->
+    <div class="controls">
+      <input type="text" id="search" placeholder="Search articles..." oninput="renderArticles()">
+      <select id="sort" onchange="renderArticles()">
+        <option value="date">Sort by Date</option>
+        <option value="title">Sort by Title</option>
+        <option value="author">Sort by Author</option>
+        <option value="issue">Sort by Issue</option>
+      </select>
+    </div>
 
-    <div class="article-body" id="article-content"></div>
-  </article>
-</main>
+    <!-- ARTICLE LIST -->
+    <div id="article-list"></div>
+
+  </main>
+
 </body>
-
 </html>

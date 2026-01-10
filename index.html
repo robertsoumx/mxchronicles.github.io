@@ -21,7 +21,7 @@
 </header>
 
 <main id="home-container">
-  <!-- Dynamic issues will render here -->
+  <!-- Issue sections will render here -->
 </main>
 
 <script>
@@ -39,9 +39,10 @@ function renderHome() {
   const issueKeys = Object.keys(issues).sort((a,b)=> b-a);
 
   issueKeys.forEach((issueNum, idx) => {
-    // Full-width section for issue
     const section = document.createElement('section');
     section.className = 'issue-section';
+    // Assign alternating layout: even = horizontal, odd = vertical
+    section.classList.add(idx % 2 === 0 ? 'layout-horizontal' : 'layout-vertical');
     section.style.backgroundImage = `url('https://picsum.photos/1200/250?grayscale&random=${idx}')`;
     section.style.backgroundSize = 'cover';
     section.style.backgroundPosition = 'center';
@@ -55,10 +56,12 @@ function renderHome() {
     issueHeader.innerHTML = `<h2>ISSUE ${issueNum}</h2>`;
     overlay.appendChild(issueHeader);
 
-    // Articles laid out vertically under issue banner
+    const articlesContainer = document.createElement('div');
+    articlesContainer.className = 'articles-container';
+
     issues[issueNum].forEach(article=>{
       const art = document.createElement('div');
-      art.className = 'article-row';
+      art.className = 'article-block';
       art.onclick = ()=>openArticle(article.id);
       art.innerHTML = `
         <h3 class="article-title">${article.title.toUpperCase()}</h3>
@@ -66,14 +69,14 @@ function renderHome() {
         ${article.image ? `<img src="${article.image}" alt="${article.title}">` : ''}
         <p class="synopsis">${article.content.substring(0,200)}...</p>
       `;
-      overlay.appendChild(art);
+      articlesContainer.appendChild(art);
     });
 
+    overlay.appendChild(articlesContainer);
     section.appendChild(overlay);
     container.appendChild(section);
   });
 }
 </script>
-
 </body>
 </html>

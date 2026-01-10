@@ -20,8 +20,8 @@
   </nav>
 </header>
 
-<main class="container" id="home-container">
-  <!-- Issue sections dynamically generated -->
+<main id="home-container">
+  <!-- Dynamic issues will render here -->
 </main>
 
 <script>
@@ -36,35 +36,37 @@ function renderHome() {
     issues[a.issue].push({...a, id});
   }
 
-  // Sort issues descending
   const issueKeys = Object.keys(issues).sort((a,b)=> b-a);
 
   issueKeys.forEach((issueNum, idx) => {
+    // Full-width section for issue
     const section = document.createElement('section');
     section.className = 'issue-section';
-    section.style.backgroundImage = `url('https://picsum.photos/1200/200?grayscale&random=${idx}')`;
+    section.style.backgroundImage = `url('https://picsum.photos/1200/250?grayscale&random=${idx}')`;
     section.style.backgroundSize = 'cover';
     section.style.backgroundPosition = 'center';
 
     const overlay = document.createElement('div');
     overlay.className = 'issue-overlay';
 
+    // Issue banner
     const issueHeader = document.createElement('div');
-    issueHeader.className = 'issue-header';
+    issueHeader.className = 'issue-banner';
     issueHeader.innerHTML = `<h2>ISSUE ${issueNum}</h2>`;
     overlay.appendChild(issueHeader);
 
-    issues[issueNum].forEach(article => {
-      const articleDiv = document.createElement('div');
-      articleDiv.className = 'article-row';
-      articleDiv.onclick = () => openArticle(article.id);
-      articleDiv.innerHTML = `
+    // Articles laid out vertically under issue banner
+    issues[issueNum].forEach(article=>{
+      const art = document.createElement('div');
+      art.className = 'article-row';
+      art.onclick = ()=>openArticle(article.id);
+      art.innerHTML = `
         <h3 class="article-title">${article.title.toUpperCase()}</h3>
         <div class="meta">${article.author} · ${article.date}</div>
         ${article.image ? `<img src="${article.image}" alt="${article.title}">` : ''}
-        <p class="synopsis">${article.content.substring(0,150)}...</p>
+        <p class="synopsis">${article.content.substring(0,200)}...</p>
       `;
-      overlay.appendChild(articleDiv);
+      overlay.appendChild(art);
     });
 
     section.appendChild(overlay);

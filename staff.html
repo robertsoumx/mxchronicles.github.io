@@ -24,6 +24,7 @@
 
   <h1>Staff Portal</h1>
 
+  <!-- LOGIN -->
   <div id="login-section">
     <p>Enter administrator password:</p>
     <input type="password" id="staff-password" placeholder="Password">
@@ -31,9 +32,11 @@
     <p id="login-error" style="color:red;"></p>
   </div>
 
+  <!-- ADMIN PANEL -->
   <div id="admin-panel" style="display:none;">
     <h2>Welcome, Admin!</h2>
 
+    <!-- ADD ARTICLE -->
     <section>
       <h3>Add New Article</h3>
       <input type="text" id="new-article-id" placeholder="Unique Article ID"><br>
@@ -47,13 +50,18 @@
       <button onclick="addArticle()">Add Article</button>
     </section>
 
+    <!-- STAFF MANAGEMENT -->
     <section>
-      <h3>Add Staff Member</h3>
-      <input type="text" id="new-staff-name" placeholder="Staff Name"><br>
-      <input type="text" id="new-staff-role" placeholder="Role"><br>
+      <h3>Manage Staff</h3>
+      <input type="text" id="new-staff-name" placeholder="Staff Name">
+      <input type="text" id="new-staff-role" placeholder="Role">
       <button onclick="addStaff()">Add Staff</button>
+
+      <h4>Current Staff</h4>
+      <ul id="staff-list-container"></ul>
     </section>
 
+    <!-- FEATURED ARTICLE -->
     <section>
       <h3>Homepage Featured Article</h3>
       <select id="homepage-featured">
@@ -71,28 +79,28 @@
 <script>
 const ADMIN_PASSWORD = "26MXChronicles";
 
+// Staff list stored in memory (can initialize empty or pre-populated)
+let staffList = [
+  { name: "Alice Montgomery", role: "Editor-in-Chief" },
+  { name: "Johnathan Doe", role: "Historical Researcher" },
+  { name: "Celine Wright", role: "Layout & Design" },
+  { name: "David Roberts", role: "Photography" },
+  { name: "Robert Sou", role: "Contributor" }
+];
+
 function checkPassword() {
   const input = document.getElementById("staff-password").value;
   if(input === ADMIN_PASSWORD){
     document.getElementById("login-section").style.display = "none";
     document.getElementById("admin-panel").style.display = "block";
     populateFeaturedDropdown();
+    renderStaffList();
   } else {
     document.getElementById("login-error").innerText = "Access denied.";
   }
 }
 
-function populateFeaturedDropdown() {
-  const sel = document.getElementById("homepage-featured");
-  sel.innerHTML = '<option value="">Select Featured Article</option>';
-  for (let id in articles) {
-    const opt = document.createElement("option");
-    opt.value = id;
-    opt.innerText = articles[id].title;
-    sel.appendChild(opt);
-  }
-}
-
+// ADD ARTICLE
 function addArticle() {
   const id = document.getElementById("new-article-id").value.trim();
   if (!id) { alert("ID required"); return; }
@@ -110,13 +118,47 @@ function addArticle() {
   populateFeaturedDropdown();
 }
 
+// ADD STAFF
 function addStaff() {
   const name = document.getElementById("new-staff-name").value.trim();
   const role = document.getElementById("new-staff-role").value.trim();
   if (!name || !role) { alert("Fill both fields"); return; }
-  if (!window.staffList) window.staffList = [];
-  window.staffList.push({ name, role });
+  staffList.push({ name, role });
+  renderStaffList();
   alert(`Staff member "${name}" added!`);
+  document.getElementById("new-staff-name").value = '';
+  document.getElementById("new-staff-role").value = '';
+}
+
+// REMOVE STAFF
+function removeStaff(index) {
+  if(confirm(`Remove staff member "${staffList[index].name}"?`)){
+    staffList.splice(index, 1);
+    renderStaffList();
+  }
+}
+
+// RENDER STAFF LIST
+function renderStaffList() {
+  const container = document.getElementById("staff-list-container");
+  container.innerHTML = '';
+  staffList.forEach((s,i) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${s.name}</strong> – ${s.role} <button onclick="removeStaff(${i})">Remove</button>`;
+    container.appendChild(li);
+  });
+}
+
+// FEATURED ARTICLE
+function populateFeaturedDropdown() {
+  const sel = document.getElementById("homepage-featured");
+  sel.innerHTML = '<option value="">Select Featured Article</option>';
+  for (let id in articles) {
+    const opt = document.createElement("option");
+    opt.value = id;
+    opt.innerText = articles[id].title;
+    sel.appendChild(opt);
+  }
 }
 
 function setFeaturedArticle() {

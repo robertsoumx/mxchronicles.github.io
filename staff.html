@@ -36,10 +36,19 @@
   <div id="admin-panel" style="display:none;">
     <h2>Welcome, Admin!</h2>
 
-    <!-- ADD ARTICLE -->
+    <!-- MANAGE ARTICLE -->
     <section>
-      <h3>Add New Article</h3>
+      <h3>Manage Articles</h3>
+      
+      <!-- Select existing article -->
+      <label for="article-select">Select Existing Article:</label>
+      <select id="article-select" onchange="loadArticleForEdit()">
+        <option value="">-- Select Article --</option>
+      </select>
+
+      <p>Or enter a new ID to add a new article:</p>
       <input type="text" id="new-article-id" placeholder="Unique Article ID"><br>
+    
       <input type="text" id="new-article-title" placeholder="Title"><br>
       <input type="text" id="new-article-author" placeholder="Author"><br>
       <input type="text" id="new-article-date" placeholder="Date"><br>
@@ -47,8 +56,11 @@
       <input type="text" id="new-article-image" placeholder="Image URL"><br>
       <input type="text" id="new-article-caption" placeholder="Caption"><br>
       <textarea id="new-article-content" placeholder="Article content HTML"></textarea><br>
-      <button onclick="addArticle()">Add Article</button>
-    </section>
+    
+      <button onclick="addOrUpdateArticle()">Add / Update Article</button>
+      <button onclick="deleteArticle()">Delete Article</button>
+</section>
+
 
     <!-- STAFF MANAGEMENT -->
     <section>

@@ -14,35 +14,79 @@
 </head>
 <body onload="renderArticles()">
 
-  <!-- HEADER / NAV -->
-  <header class="site-header">
-    <div class="masthead">MX Chronicles</div>
-    <nav class="nav-tabs">
-      <a href="index.html">Home</a>
-      <a href="articles.html">Articles</a>
-      <a href="about.html">About</a>
-      <a href="staff.html">Staff Portal</a>
-    </nav>
-  </header>
+<!-- HEADER / NAV -->
+<header class="site-header">
+  <div class="masthead">MX Chronicles</div>
+  <nav class="nav-tabs">
+    <a href="index.html">Home</a>
+    <a href="articles.html" class="active">Articles</a>
+    <a href="about.html">About</a>
+    <a href="staff.html">Staff Portal</a>
+  </nav>
+</header>
 
-  <!-- MAIN CONTENT -->
-  <main class="container">
+<!-- MAIN CONTENT -->
+<main class="container">
 
-    <!-- SEARCH & SORT -->
-    <div class="controls">
-      <input type="text" id="search" placeholder="Search articles..." oninput="renderArticles()">
-      <select id="sort" onchange="renderArticles()">
-        <option value="date">Sort by Date</option>
-        <option value="title">Sort by Title</option>
-        <option value="author">Sort by Author</option>
-        <option value="issue">Sort by Issue</option>
-      </select>
-    </div>
+  <!-- SEARCH & SORT -->
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search articles..." oninput="renderArticles()">
+    <select id="sort" onchange="renderArticles()">
+      <option value="date">Sort by Date</option>
+      <option value="title">Sort by Title</option>
+      <option value="author">Sort by Author</option>
+      <option value="issue">Sort by Issue</option>
+    </select>
+  </div>
 
-    <!-- ARTICLE LIST -->
-    <div id="article-list"></div>
+  <!-- ARTICLE LIST -->
+  <div id="article-list">
+    <!-- JS will populate this dynamically -->
+  </div>
 
-  </main>
+</main>
+
+<script>
+function renderArticles() {
+  const searchValue = document.getElementById('search').value.toLowerCase();
+  const sortValue = document.getElementById('sort').value;
+
+  const listContainer = document.getElementById('article-list');
+  listContainer.innerHTML = '';
+
+  let sortedArticles = Object.entries(articles);
+
+  // Filter
+  if(searchValue){
+    sortedArticles = sortedArticles.filter(([id, a]) =>
+      a.title.toLowerCase().includes(searchValue) ||
+      a.author.toLowerCase().includes(searchValue) ||
+      (a.issue && a.issue.toLowerCase().includes(searchValue))
+    );
+  }
+
+  // Sort
+  sortedArticles.sort(([, a], [, b]) => {
+    if(sortValue === 'date') return new Date(b.date) - new Date(a.date);
+    if(sortValue === 'title') return a.title.localeCompare(b.title);
+    if(sortValue === 'author') return a.author.localeCompare(b.author);
+    if(sortValue === 'issue') return (a.issue || '').localeCompare(b.issue || '');
+  });
+
+  // Render
+  for(const [id, a] of sortedArticles){
+    const div = document.createElement('div');
+    div.className = 'article-list-item';
+    div.onclick = () => openArticle(id);
+
+    div.innerHTML = `
+      <h3>${a.title}</h3>
+      <div class="meta">${a.author} · ${a.date} · ${a.issue || ''}</div>
+    `;
+    listContainer.appendChild(div);
+  }
+}
+</script>
 
 </body>
 </html>

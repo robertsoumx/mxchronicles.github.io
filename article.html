@@ -9,33 +9,21 @@
 </head>
 
 <body onload="loadArticle()">
-<header class="article">
-  <div class="logo">MX Chronicles</div>
-</header>
-  
-<header class="site-header">
-  <div class="masthead">MX Chronicles</div>
-  <nav class="nav-tabs">
-    <a href="index.html">Home</a>
-    <a href="articles.html">Articles</a>
-    <a href="about.html">About</a>
-  </nav>
-</header>
+<header class="site-header">…</header>
 
-<main class="container article-layout">
-  <article class="article-body">
-    <h1 id="article-title"></h1>
+<main class="container article-nyt">
+  <article class="article-core">
+    <h1 class="article-title" id="article-title"></h1>
     <div class="article-meta" id="article-meta"></div>
-    <img id="article-image" alt="Article illustration" />
-    <div id="article-content"></div>
+
+    <figure class="article-image">
+      <img id="article-image">
+      <figcaption id="article-caption"></figcaption>
+    </figure>
+
+    <div class="article-body" id="article-content"></div>
   </article>
-
-  <aside class="sidebar">
-    <h3>About This Issue</h3>
-    <p>Exploring historical systems, power, and change.</p>
-  </aside>
 </main>
-
-<footer>© 2026 MX Chronicles</footer>
 </body>
+
 </html>

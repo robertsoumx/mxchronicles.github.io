@@ -1,43 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MX Chronicles · Articles</title>
+  <title>MX Chronicles · Article</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- JS -->
   <script src="articles.js" defer></script>
   <script src="script.js" defer></script>
 </head>
-<body onload="renderArticles()">
+<body onload="loadArticle()">
 
-<!-- HEADER -->
-<header class="site-header">
-  <div class="masthead">MX Chronicles</div>
-  <nav class="nav-tabs">
-    <a href="index.html">Home</a>
-    <a href="articles.html">Articles</a>
-    <a href="about.html">About</a>
-  </nav>
-</header>
+  <!-- HEADER / NAV -->
+  <header class="site-header">
+    <div class="masthead">MX Chronicles</div>
+    <nav class="nav-tabs">
+      <a href="index.html">Home</a>
+      <a href="articles.html">Articles</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
 
-<!-- MAIN CONTENT -->
-<main class="container">
+  <!-- ARTICLE CONTENT -->
+  <main class="container article-nyt">
+    <article class="article-core">
+      <h1 class="article-title" id="article-title"></h1>
+      <div class="article-meta" id="article-meta"></div>
 
-  <!-- SEARCH & SORT CONTROLS -->
-  <div class="controls">
-    <input type="text" id="search" placeholder="Search articles..." oninput="renderArticles()">
-    <select id="sort" onchange="renderArticles()">
-      <option value="date">Sort by Date</option>
-      <option value="title">Sort by Title</option>
-      <option value="author">Sort by Author</option>
-      <option value="issue">Sort by Issue</option>
-    </select>
-  </div>
+      <figure class="article-image">
+        <img id="article-image" alt="">
+        <figcaption id="article-caption"></figcaption>
+      </figure>
 
-  <!-- ARTICLE LIST -->
-  <div id="article-list"></div>
+      <div class="article-body" id="article-content"></div>
+    </article>
+  </main>
 
-</main>
+  <!-- SCRIPT TO LOAD ARTICLE FROM URL -->
+  <script>
+    function loadArticle() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (!id || !articles[id]) {
+        document.getElementById("article-content").innerHTML = "<p>Article not found.</p>";
+        document.getElementById("article-title").innerText = "404 - Article Not Found";
+        return;
+      }
+
+      const a = articles[id];
+      document.getElementById("article-title").innerText = a.title;
+      document.getElementById("article-meta").innerText = `${a.author} · ${a.date} · ${a.issue || ""}`;
+      document.getElementById("article-image").src = a.image || "";
+      document.getElementById("article-image").alt = a.title;
+      document.getElementById("article-caption").innerText = a.caption || "";
+      document.getElementById("article-content").innerHTML = a.content || "";
+    }
+
+    function openArticle(id) {
+      window.location.href = `article.html?id=${id}`;
+    }
+  </script>
 
 </body>
 </html>

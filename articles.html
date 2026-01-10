@@ -23,19 +23,22 @@
 
 <main class="container">
 
-  <!-- SEARCH & SORT -->
-  <div class="controls" style="margin-bottom:1.5rem;">
-    <input type="text" id="search" placeholder="Search articles..." oninput="renderArticles()">
-    <select id="sort" onchange="renderArticles()">
-      <option value="date">Sort by Date</option>
-      <option value="title">Sort by Title</option>
-      <option value="author">Sort by Author</option>
-      <option value="issue">Sort by Issue</option>
+  <!-- FILTER PANEL -->
+  <div class="filter-panel" style="margin-bottom:2rem; display:flex; flex-wrap:wrap; align-items:center; gap:1rem; background: rgba(255,250,240,0.95); padding:1rem; border-left:4px solid #7b5e3c; border-radius:5px; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+    <label for="search" style="font-weight:bold;">Search:</label>
+    <input type="text" id="search" placeholder="Title, Author, Issue..." oninput="renderArticles()" style="flex:1; padding:0.5rem; border:1px solid #7b5e3c; border-radius:4px;">
+    
+    <label for="sort" style="font-weight:bold;">Sort by:</label>
+    <select id="sort" onchange="renderArticles()" style="padding:0.5rem; border:1px solid #7b5e3c; border-radius:4px;">
+      <option value="date">Date (Newest)</option>
+      <option value="title">Title</option>
+      <option value="author">Author</option>
+      <option value="issue">Issue</option>
     </select>
   </div>
 
-  <!-- ARTICLE LIST GRID -->
-  <div id="article-list" class="home-grid"></div>
+  <!-- ARTICLE LIST -->
+  <div id="article-list"></div>
 
 </main>
 
@@ -66,19 +69,20 @@ function renderArticles() {
     if(sortValue === 'issue') return (a.issue || '').localeCompare(b.issue || '');
   });
 
-  // Render as tiles
-  for(const [id, a] of sortedArticles){
+  // Render as newspaper-style sections
+  sortedArticles.forEach(([id, a], index) => {
     const div = document.createElement('div');
-    div.className = 'article-list-item';
+    div.className = 'article-section';
+    div.style.background = index % 2 === 0 ? 'rgba(255,250,240,0.95)' : 'rgba(255,245,235,0.95)';
     div.onclick = () => openArticle(id);
     div.innerHTML = `
-      <h3>${a.title}</h3>
+      <h2>${a.title}</h2>
       <div class="meta">${a.author} · ${a.date} · ${a.issue || ''}</div>
       ${a.image ? `<img src="${a.image}" alt="${a.title}">` : ''}
-      <p class="synopsis">${a.content.substring(0, 100)}...</p>
+      <p class="synopsis">${a.content.substring(0, 200)}...</p>
     `;
     listContainer.appendChild(div);
-  }
+  });
 }
 </script>
 

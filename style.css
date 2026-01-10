@@ -1,43 +1,64 @@
 /* GLOBAL */
-body { margin:0; font-family:'Merriweather', serif; background:url('https://www.transparenttextures.com/patterns/old-mathematics.png') repeat; color:#2c2c2c; line-height:1.7; }
+body {
+  margin:0;
+  font-family:'Merriweather', serif;
+  background:url('https://www.transparenttextures.com/patterns/old-mathematics.png') repeat;
+  color:#2c2c2c;
+  line-height:1.7;
+}
 a { text-decoration:none; color:inherit; }
 
 /* HEADER */
-.site-header { background:url('https://www.transparenttextures.com/patterns/papyrus.png') repeat; padding:2rem 0; text-align:center; border-bottom:4px solid #7b5e3c; }
+.site-header {
+  background:url('https://www.transparenttextures.com/patterns/papyrus.png') repeat;
+  padding:2rem 0;
+  text-align:center;
+  border-bottom:4px solid #7b5e3c;
+}
 .masthead { font-family:'Playfair Display', serif; font-size:3.5rem; letter-spacing:0.08em; text-transform:uppercase; }
 .nav-tabs a { margin:0 2rem; font-size:1.5rem; font-weight:bold; border-bottom:3px solid transparent; padding-bottom:0.2rem; transition:all 0.2s; }
 .nav-tabs a.active, .nav-tabs a:hover { border-bottom:3px solid #7b5e3c; }
 
 /* ISSUE SECTION */
 .issue-section { width:100%; position:relative; margin-bottom:3rem; }
-.issue-overlay { background: rgba(255,250,240,0.85); padding:2rem 5%; border-radius:8px; }
+.issue-overlay { background: rgba(255,250,240,0.9); padding:2rem 5%; border-radius:8px; }
 
 /* ISSUE BANNER */
-.issue-banner h2 { font-family:'Playfair Display', serif; font-size:2.5rem; text-transform:uppercase; border-bottom:2px solid #c9b79c; padding-bottom:0.25rem; margin-bottom:2rem; color:#7b5e3c; }
-
-/* Articles container */
-.articles-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+.issue-banner h2 {
+  font-family:'Playfair Display', serif;
+  font-size:2.5rem;
+  text-transform:uppercase;
+  border-bottom:2px solid #c9b79c;
+  padding-bottom:0.25rem;
+  margin-bottom:2rem;
+  color:#7b5e3c;
 }
 
-/* Horizontal layout: articles side by side */
-.layout-horizontal .articles-container { flex-direction: row; }
+/* ARTICLES CONTAINER */
+.articles-container {
+  display:grid;
+  gap:1.5rem;
+}
 
-/* Vertical layout: articles stacked */
-.layout-vertical .articles-container { flex-direction: column; }
+/* HORIZONTAL ISSUE: articles side by side */
+.issue-horizontal .articles-container {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
 
-/* Individual article block */
+/* VERTICAL ISSUE: articles stacked in columns */
+.issue-vertical .articles-container {
+  grid-template-columns: 1fr;
+}
+
+/* ARTICLE BLOCK */
 .article-block {
-  flex:1 1 300px;
   background: rgba(245,235,220,0.9);
   padding:1rem;
-  border-radius:6px;
   border-left:3px solid #7b5e3c;
+  border-radius:6px;
   box-shadow:0 6px 15px rgba(0,0,0,0.12);
   cursor:pointer;
-  transition:transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 .article-block:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(0,0,0,0.18); }
 
@@ -48,6 +69,6 @@ a { text-decoration:none; color:inherit; }
 
 /* Responsive */
 @media(max-width:900px){
-  .nav-tabs a{display:block; margin:0.5rem 0;}
-  .articles-container{flex-direction:column;}
+  .articles-container { grid-template-columns:1fr; }
+  .nav-tabs a { display:block; margin:0.5rem 0; }
 }

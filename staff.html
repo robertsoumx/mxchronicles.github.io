@@ -103,12 +103,10 @@ let staffList = [
 function checkPassword() {
   const input = document.getElementById("staff-password").value;
   if(input === ADMIN_PASSWORD){
-    document.getElementById("login-section").style.display = "none";
-    document.getElementById("admin-panel").style.display = "block";
-    populateFeaturedDropdown();
-    renderStaffList();
-  } else {
-    document.getElementById("login-error").innerText = "Access denied.";
+  document.getElementById("login-section").style.display = "none";
+  document.getElementById("admin-panel").style.display = "block";
+  populatePortalDropdowns();
+  renderStaffList();
   }
 }
 
@@ -183,5 +181,80 @@ function setFeaturedArticle() {
 function unfeatureArticle() {
   localStorage.removeItem("featuredArticle");
   alert("Featured article removed from homepage.");
+}
+
+function populateArticleSelect() {
+  const sel = document.getElementById("article-select");
+  sel.innerHTML = '<option value="">-- Select Article --</option>';
+  for (let id in articles) {
+    const opt = document.createElement("option");
+    opt.value = id;
+    opt.innerText = articles[id].title;
+    sel.appendChild(opt);
+  }
+}
+
+// Load selected article into form
+function loadArticleForEdit() {
+  const sel = document.getElementById("article-select");
+  const id = sel.value;
+  if(!id || !articles[id]) return;
+
+  const a = articles[id];
+  document.getElementById("new-article-id").value = id;
+  document.getElementById("new-article-title").value = a.title;
+  document.getElementById("new-article-author").value = a.author;
+  document.getElementById("new-article-date").value = a.date;
+  document.getElementById("new-article-issue").value = a.issue;
+  document.getElementById("new-article-image").value = a.image;
+  document.getElementById("new-article-caption").value = a.caption;
+  document.getElementById("new-article-content").value = a.content;
+}
+
+// Add or update article
+function addOrUpdateArticle() {
+  const id = document.getElementById("new-article-id").value.trim();
+  if(!id) { alert("ID required"); return; }
+
+  articles[id] = {
+    title: document.getElementById("new-article-title").value,
+    author: document.getElementById("new-article-author").value,
+    date: document.getElementById("new-article-date").value,
+    issue: document.getElementById("new-article-issue").value,
+    image: document.getElementById("new-article-image").value,
+    caption: document.getElementById("new-article-caption").value,
+    content: document.getElementById("new-article-content").value
+  };
+
+  alert(`Article "${articles[id].title}" has been added/updated!`);
+  populateArticleSelect();
+  populateFeaturedDropdown();
+}
+
+// Delete selected article
+function deleteArticle() {
+  const id = document.getElementById("article-select").value;
+  if(!id || !articles[id]) { alert("Select an article to delete."); return; }
+  if(confirm(`Are you sure you want to delete "${articles[id].title}"?`)) {
+    delete articles[id];
+    alert("Article deleted!");
+    document.getElementById("article-select").value = '';
+    document.getElementById("new-article-id").value = '';
+    document.getElementById("new-article-title").value = '';
+    document.getElementById("new-article-author").value = '';
+    document.getElementById("new-article-date").value = '';
+    document.getElementById("new-article-issue").value = '';
+    document.getElementById("new-article-image").value = '';
+    document.getElementById("new-article-caption").value = '';
+    document.getElementById("new-article-content").value = '';
+    populateArticleSelect();
+    populateFeaturedDropdown();
+  }
+}
+
+// Ensure dropdowns populate after login
+function populatePortalDropdowns() {
+  populateArticleSelect();
+  populateFeaturedDropdown();
 }
 </script>

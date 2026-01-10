@@ -21,7 +21,7 @@
 </header>
 
 <main id="home-container">
-  <!-- Issue sections will render here -->
+  <!-- Home issues and articles will render here -->
 </main>
 
 <script>
@@ -29,7 +29,6 @@ function renderHome() {
   const container = document.getElementById('home-container');
   container.innerHTML = '';
 
-  // Group articles by issue
   const issues = {};
   for(const [id,a] of Object.entries(articles)){
     if(!issues[a.issue]) issues[a.issue] = [];
@@ -41,8 +40,8 @@ function renderHome() {
   issueKeys.forEach((issueNum, idx) => {
     const section = document.createElement('section');
     section.className = 'issue-section';
-    // Assign alternating layout: even = horizontal, odd = vertical
-    section.classList.add(idx % 2 === 0 ? 'layout-horizontal' : 'layout-vertical');
+    // Assign horizontal or vertical layout per issue
+    section.classList.add(idx % 2 === 0 ? 'issue-horizontal' : 'issue-vertical');
     section.style.backgroundImage = `url('https://picsum.photos/1200/250?grayscale&random=${idx}')`;
     section.style.backgroundSize = 'cover';
     section.style.backgroundPosition = 'center';
@@ -50,7 +49,6 @@ function renderHome() {
     const overlay = document.createElement('div');
     overlay.className = 'issue-overlay';
 
-    // Issue banner
     const issueHeader = document.createElement('div');
     issueHeader.className = 'issue-banner';
     issueHeader.innerHTML = `<h2>ISSUE ${issueNum}</h2>`;
@@ -59,12 +57,12 @@ function renderHome() {
     const articlesContainer = document.createElement('div');
     articlesContainer.className = 'articles-container';
 
-    issues[issueNum].forEach(article=>{
+    issues[issueNum].forEach(article => {
       const art = document.createElement('div');
       art.className = 'article-block';
       art.onclick = ()=>openArticle(article.id);
       art.innerHTML = `
-        <h3 class="article-title">${article.title.toUpperCase()}</h3>
+        <h3 class="article-title">${article.title}</h3>
         <div class="meta">${article.author} · ${article.date}</div>
         ${article.image ? `<img src="${article.image}" alt="${article.title}">` : ''}
         <p class="synopsis">${article.content.substring(0,200)}...</p>
@@ -78,5 +76,6 @@ function renderHome() {
   });
 }
 </script>
+
 </body>
 </html>

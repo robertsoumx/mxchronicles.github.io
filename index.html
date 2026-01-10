@@ -38,8 +38,8 @@ function renderHomepage() {
   const featuredId = localStorage.getItem("featuredArticle");
   let featuredArticle = featuredId ? articles[featuredId] : null;
 
-  // Featured Article Tile
-  if (featuredArticle) {
+  // Featured tile
+  if(featuredArticle){
     const div = document.createElement("div");
     div.className = "home-feature";
     div.onclick = () => openArticle(featuredId);
@@ -52,9 +52,9 @@ function renderHomepage() {
     container.appendChild(div);
   }
 
-  // All other articles (excluding featured)
-  for (let id in articles) {
-    if (id === featuredId) continue;
+  // Other articles
+  for(let id in articles){
+    if(id === featuredId) continue;
     const a = articles[id];
     const div = document.createElement("div");
     div.className = "home-article";
@@ -68,7 +68,6 @@ function renderHomepage() {
     container.appendChild(div);
   }
 }
-
 document.addEventListener("DOMContentLoaded", renderHomepage);
 </script>
 

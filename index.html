@@ -1,32 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>MX Chronicles</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="articles.js" defer></script>
-  <script src="script.js" defer></script>
-</head>
-
-<body>
-<header class="home">
-  <div class="logo">MX Chronicles</div>
-</header>
-
 <main class="container">
   <div class="grid">
-    <div class="tile" onclick="openArticle('industrial-cities')">
-      <h2>The Rise of Industrial Cities</h2>
-      <p>How factories reshaped the modern world.</p>
+
+    <!-- FEATURED ARTICLE -->
+    <div class="tile featured"
+         style="background-image:url('https://images.unsplash.com/photo-1549893074-0a6bcd4f6f52');"
+         onclick="openArticle('industrial-cities')">
+
+      <div class="title large">THE RISE OF INDUSTRIAL CITIES</div>
+
+      <div class="meta">
+        MX Chronicles Staff · March 1892
+      </div>
+
+      <div class="synopsis">
+        How factories, railroads, and migration reshaped the social and political
+        order of the modern world.
+      </div>
     </div>
 
-    <div class="tile" onclick="openArticle('ancient-trade')">
-      <h2>Ancient Trade Routes</h2>
-      <p>The forgotten highways of civilization.</p>
+    <!-- STANDARD ARTICLE -->
+    <div class="tile"
+         onclick="openArticle('ancient-trade')">
+
+      <div class="title">ANCIENT TRADE ROUTES</div>
+
+      <div class="meta">
+        Historical Desk · 120 BCE
+      </div>
+
+      <div class="synopsis">
+        The forgotten highways that connected empires through commerce,
+        culture, and ideas.
+      </div>
     </div>
+
+    <!-- ANOTHER ARTICLE -->
+    <div class="tile"
+         onclick="openArticle('industrial-cities')">
+
+      <div class="title">URBAN LIFE AND LABOR</div>
+
+      <div class="meta">
+        MX Chronicles · 1887
+      </div>
+
+      <div class="synopsis">
+        Daily life inside the factories and tenements of the 19th century metropolis.
+      </div>
+    </div>
+
   </div>
 </main>
-
-<footer>© 2026 MX Chronicles</footer>
-</body>
-</html>

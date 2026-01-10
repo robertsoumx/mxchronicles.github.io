@@ -1,17 +1,22 @@
-function openArticle(id) {
-  window.location.href = `article.html?id=${id}`;
-}
+function renderArticles() {
+  const list = document.getElementById("article-list");
+  const q = document.getElementById("search").value.toLowerCase();
+  const sort = document.getElementById("sort").value;
 
-function loadArticle() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-  const article = articles[id];
+  let data = Object.entries(articles)
+    .filter(([_, a]) =>
+      a.title.toLowerCase().includes(q) ||
+      a.author.toLowerCase().includes(q)
+    );
 
-  if (!article) return;
+  data.sort((a, b) => a[1][sort].localeCompare(b[1][sort]));
 
-  document.getElementById("article-title").innerText = article.title;
-  document.getElementById("article-meta").innerText =
-    `${article.author} · ${article.date}`;
-  document.getElementById("article-image").src = article.image;
-  document.getElementById("article-content").innerHTML = article.content;
+  list.innerHTML = "";
+  data.forEach(([id, a]) => {
+    list.innerHTML += `
+      <div class="article-list-item" onclick="openArticle('${id}')">
+        <h3>${a.title}</h3>
+        <div class="article-meta">${a.author} · ${a.date}</div>
+      </div>`;
+  });
 }

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MX Chronicles · Staff Portal</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="articles.js" defer></script>
-  <script src="script.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MX Chronicles · Staff Portal</title>
+<link rel="stylesheet" href="style.css">
+<script src="data.js" defer></script>
+<script src="script.js" defer></script>
 </head>
 <body onload="showStaffLogin()">
 
@@ -20,17 +20,14 @@
   </nav>
 </header>
 
-<main id="staff-container">
-  <!-- Login or portal UI appears here -->
-</main>
+<main id="staff-container"></main>
 
 <script>
-const STAFF_PASSWORD = "26MXChronicles";
+const STAFF_PASSWORD="26MXChronicles";
 
-// Show login form
-function showStaffLogin() {
-  const container = document.getElementById('staff-container');
-  container.innerHTML = `
+function showStaffLogin(){
+  const container=document.getElementById('staff-container');
+  container.innerHTML=`
     <section class="issue-section">
       <div class="issue-overlay">
         <h2>STAFF PORTAL LOGIN</h2>
@@ -42,31 +39,28 @@ function showStaffLogin() {
   `;
 }
 
-// Check password
-function checkStaffPassword() {
-  const pass = document.getElementById('staff-pass').value;
-  if(pass === STAFF_PASSWORD){
-    renderStaffPortal();
-  } else {
-    document.getElementById('staff-error').innerText = "Incorrect password";
-  }
+function checkStaffPassword(){
+  const pass=document.getElementById('staff-pass').value;
+  if(pass===STAFF_PASSWORD) renderStaffPortal();
+  else document.getElementById('staff-error').innerText="Incorrect password";
 }
 
-// Render portal UI
-function renderStaffPortal() {
-  const container = document.getElementById('staff-container');
-  container.innerHTML = '';
+function renderStaffPortal(){
+  const container=document.getElementById('staff-container');
+  container.innerHTML='';
 
-  // ARTICLES MANAGEMENT
-  const articleSection = document.createElement('section');
-  articleSection.className = 'issue-section';
-  articleSection.innerHTML = `<div class="issue-overlay"><h2>MANAGE ARTICLES</h2></div>`;
-  const articleContainer = document.createElement('div');
-  articleContainer.className = 'articles-container issue-layout';
-  for(const [id,a] of Object.entries(articles)){
-    const art = document.createElement('div');
-    art.className = 'article-block';
-    art.innerHTML = `
+  // ARTICLES
+  const articleSection=document.createElement('section');
+  articleSection.className='issue-section';
+  articleSection.innerHTML='<div class="issue-overlay"><h2>MANAGE ARTICLES</h2></div>';
+  const articleContainer=document.createElement('div');
+  articleContainer.className='articles-container issue-layout';
+  const layoutAreas=['feature','side1','side2','side3','side4'];
+  Object.entries(articles).forEach(([id,a],i)=>{
+    const artDiv=document.createElement('div');
+    artDiv.className='article-block';
+    artDiv.style.gridArea=layoutAreas[i%layoutAreas.length];
+    artDiv.innerHTML=`
       <h3 class="article-title">${a.title}</h3>
       <div class="meta">${a.author} · ${a.date}</div>
       <p style="font-size:0.9rem; margin-top:0.5rem;">
@@ -75,15 +69,15 @@ function renderStaffPortal() {
         <button onclick="toggleFeature('${id}')">${a.featured?'Unfeature':'Feature'}</button>
       </p>
     `;
-    articleContainer.appendChild(art);
-  }
+    articleContainer.appendChild(artDiv);
+  });
   articleSection.querySelector('.issue-overlay').appendChild(articleContainer);
   container.appendChild(articleSection);
 
-  // STAFF MANAGEMENT
-  const staffSection = document.createElement('section');
-  staffSection.className = 'issue-section';
-  staffSection.innerHTML = `
+  // STAFF
+  const staffSection=document.createElement('section');
+  staffSection.className='issue-section';
+  staffSection.innerHTML=`
     <div class="issue-overlay">
       <h2>MANAGE STAFF</h2>
       <input type="text" id="new-staff" placeholder="Add staff member" style="padding:0.5rem; width:200px;">
@@ -95,44 +89,33 @@ function renderStaffPortal() {
   renderStaffList();
 }
 
-// STAFF MANAGEMENT FUNCTIONS
-function renderStaffList() {
-  const listContainer = document.getElementById('staff-list');
-  listContainer.innerHTML = '';
+function renderStaffList(){
+  const listContainer=document.getElementById('staff-list');
+  listContainer.innerHTML='';
   staff.forEach((s,i)=>{
-    const div = document.createElement('div');
-    div.style.margin = '0.5rem 0';
-    div.innerHTML = `${s} <button onclick="removeStaff(${i})">Remove</button>`;
+    const div=document.createElement('div');
+    div.style.margin='0.5rem 0';
+    div.innerHTML=`${s} <button onclick="removeStaff(${i})">Remove</button>`;
     listContainer.appendChild(div);
   });
 }
 
-function addStaff() {
-  const name = document.getElementById('new-staff').value.trim();
+function addStaff(){
+  const name=document.getElementById('new-staff').value.trim();
   if(name){ staff.push(name); renderStaffList(); document.getElementById('new-staff').value=''; }
 }
+function removeStaff(idx){ staff.splice(idx,1); renderStaffList(); }
 
-function removeStaff(idx){
-  staff.splice(idx,1);
-  renderStaffList();
-}
-
-// ARTICLE MANAGEMENT FUNCTIONS
 function editArticle(id){
-  const newTitle = prompt("Enter new title", articles[id].title);
-  if(newTitle) articles[id].title = newTitle;
+  const newTitle=prompt("Enter new title", articles[id].title);
+  if(newTitle) articles[id].title=newTitle;
   renderStaffPortal();
 }
-
 function deleteArticle(id){
-  if(confirm("Delete this article?")) {
-    delete articles[id];
-    renderStaffPortal();
-  }
+  if(confirm("Delete this article?")){ delete articles[id]; renderStaffPortal(); }
 }
-
 function toggleFeature(id){
-  articles[id].featured = !articles[id].featured;
+  articles[id].featured=!articles[id].featured;
   renderStaffPortal();
 }
 </script>

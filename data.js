@@ -2,14 +2,21 @@ const issues = {
   1: {
     theme: "FOUNDATIONS & ORIGINS",
     description:
-      "Exploring the earliest structures, cultural memory, and the roots of historical continuity."
+      "Exploring early structures, cultural memory, and the roots of continuity."
   },
   2: {
     theme: "COLONIAL MEMORY",
     description:
-      "A critical look into colonial narratives, forgotten voices, and lasting impacts."
+      "Examining colonial narratives, forgotten voices, and their legacies."
   }
 };
+
+const staff = [
+  { name: "Alice", role: "Editor" },
+  { name: "John", role: "Writer" },
+  { name: "Celine", role: "Historian" },
+  { name: "Robert", role: "Contributor" }
+];
 
 const articles = [
   {
@@ -18,9 +25,8 @@ const articles = [
     title: "Colonial Stories",
     author: "Robert",
     date: "2026-01-04",
-    image: "https://picsum.photos/600/400?random=11",
-    content:
-      "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae."
+    image: "https://picsum.photos/600/400?random=21",
+    content: "Vestibulum ante ipsum primis in faucibus orci luctus."
   },
   {
     id: 2,
@@ -28,9 +34,8 @@ const articles = [
     title: "Ancient Artifacts",
     author: "Celine",
     date: "2026-01-03",
-    image: "https://picsum.photos/600/400?random=12",
-    content:
-      "Praesent volutpat, justo at tincidunt efficitur, eros libero sagittis odio."
+    image: "https://picsum.photos/600/400?random=22",
+    content: "Praesent volutpat justo at tincidunt efficitur."
   },
   {
     id: 3,
@@ -38,18 +43,7 @@ const articles = [
     title: "History of MX",
     author: "Alice",
     date: "2026-01-01",
-    image: "https://picsum.photos/600/400?random=13",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia."
-  },
-  {
-    id: 4,
-    issue: 1,
-    title: "The Old Times",
-    author: "John",
-    date: "2026-01-02",
-    image: "https://picsum.photos/600/400?random=14",
-    content:
-      "Curabitur sit amet massa sed sapien bibendum feugiat."
+    image: "https://picsum.photos/600/400?random=23",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing."
   }
 ];

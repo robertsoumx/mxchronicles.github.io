@@ -4,13 +4,11 @@
 <meta charset="UTF-8">
 <title>MX Chronicles · Staff Portal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
 </head>
 
 <body>
-
 <header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
   <nav class="top-nav">
@@ -23,159 +21,67 @@
 
 <main class="staff-layout">
 
-  <!-- LOGIN -->
-  <section class="staff-panel" id="login-panel">
-    <h2>STAFF ACCESS</h2>
-    <input type="password" id="staff-password" placeholder="Enter password">
-    <button onclick="login()">Enter</button>
-    <p id="login-error"></p>
+<section class="staff-panel" id="login">
+  <h2>STAFF ACCESS</h2>
+  <input type="password" id="pass" placeholder="Password">
+  <button onclick="login()">Enter</button>
+  <p id="err"></p>
+</section>
+
+<section id="dashboard" hidden>
+
+  <section class="staff-section">
+    <h2>ISSUES</h2>
+    <div id="issue-list"></div>
   </section>
 
-  <!-- DASHBOARD -->
-  <section class="staff-dashboard" id="dashboard" hidden>
-
-    <!-- ISSUE MANAGEMENT -->
-    <div class="staff-section">
-      <h2>ISSUE MANAGEMENT</h2>
-
-      <div id="issue-list"></div>
-
-      <input id="new-issue-num" placeholder="Issue number">
-      <input id="new-issue-theme" placeholder="Issue theme">
-      <textarea id="new-issue-desc" placeholder="Issue description"></textarea>
-      <button onclick="addIssue()">Add Issue</button>
-    </div>
-
-    <!-- ARTICLE MANAGEMENT -->
-    <div class="staff-section">
-      <h2>ARTICLE MANAGEMENT</h2>
-      <div id="article-list"></div>
-    </div>
-
-    <!-- STAFF MANAGEMENT -->
-    <div class="staff-section">
-      <h2>STAFF LIST</h2>
-      <input id="new-staff-name" placeholder="New staff member">
-      <button onclick="addStaff()">Add</button>
-      <div id="staff-list"></div>
-    </div>
-
+  <section class="staff-section">
+    <h2>STAFF</h2>
+    <div id="staff-list"></div>
   </section>
 
+</section>
 </main>
 
 <script>
-const PASSWORD = "26MXChronicles";
+const PASSWORD="26MXChronicles";
 
-function login() {
-  if (document.getElementById("staff-password").value === PASSWORD) {
-    document.getElementById("login-panel").hidden = true;
-    document.getElementById("dashboard").hidden = false;
-    renderDashboard();
-  } else {
-    document.getElementById("login-error").innerText = "Incorrect password.";
-  }
+function login(){
+  if(pass.value===PASSWORD){
+    login.hidden=true;
+    dashboard.hidden=false;
+    renderAll();
+  } else err.textContent="Incorrect password";
 }
 
-/* ───── ISSUE MANAGEMENT ───── */
-
-function renderIssues() {
-  const container = document.getElementById("issue-list");
-  container.innerHTML = "";
-
-  Object.entries(issues).forEach(([num, issue]) => {
-    const div = document.createElement("div");
-    div.className = "staff-row";
-    div.innerHTML = `
-      <strong>Issue ${num}</strong> — ${issue.theme}
-      <button onclick="deleteIssue(${num})">Delete</button>
-    `;
-    container.appendChild(div);
-  });
-}
-
-function addIssue() {
-  const num = document.getElementById("new-issue-num").value;
-  const theme = document.getElementById("new-issue-theme").value;
-  const desc = document.getElementById("new-issue-desc").value;
-
-  if (!num || !theme) return;
-
-  issues[num] = { theme, description: desc };
+function renderAll(){
   renderIssues();
-}
-
-function deleteIssue(num) {
-  delete issues[num];
-  renderIssues();
-}
-
-/* ───── ARTICLE MANAGEMENT ───── */
-
-function renderArticles() {
-  const container = document.getElementById("article-list");
-  container.innerHTML = "";
-
-  articles.forEach((a, i) => {
-    const div = document.createElement("div");
-    div.className = "staff-row";
-    div.innerHTML = `
-      <strong>${a.title}</strong> (Issue ${a.issue})
-      <button onclick="changeArticleIssue(${i})">Change Issue</button>
-      <button onclick="deleteArticle(${i})">Delete</button>
-    `;
-    container.appendChild(div);
-  });
-}
-
-function changeArticleIssue(index) {
-  const newIssue = prompt("New issue number:", articles[index].issue);
-  if (newIssue) articles[index].issue = Number(newIssue);
-  renderArticles();
-}
-
-function deleteArticle(index) {
-  articles.splice(index, 1);
-  renderArticles();
-}
-
-/* ───── STAFF MANAGEMENT ───── */
-
-function renderStaff() {
-  const container = document.getElementById("staff-list");
-  container.innerHTML = "";
-
-  staff.forEach((s, i) => {
-    const div = document.createElement("div");
-    div.className = "staff-row";
-    div.innerHTML = `
-      ${s}
-      <button onclick="removeStaff(${i})">Remove</button>
-    `;
-    container.appendChild(div);
-  });
-}
-
-function addStaff() {
-  const name = document.getElementById("new-staff-name").value;
-  if (!name) return;
-  staff.push(name);
   renderStaff();
 }
 
-function removeStaff(i) {
-  staff.splice(i, 1);
-  renderStaff();
+function renderIssues(){
+  issue-list.innerHTML="";
+  Object.entries(issues).forEach(([n,i])=>{
+    issue-list.innerHTML+=`
+      <div class="staff-row">
+        <strong>Issue ${n}</strong> — ${i.theme}
+      </div>`;
+  });
 }
 
-/* ───── INIT ───── */
-
-function renderDashboard() {
-  renderIssues();
-  renderArticles();
-  renderStaff();
+function renderStaff(){
+  staff-list.innerHTML="";
+  staff.forEach((s,i)=>{
+    staff-list.innerHTML+=`
+      <div class="staff-row">
+        ${s.name}
+        <select onchange="staff[${i}].role=this.value">
+          ${["Editor","Writer","Historian","Contributor"]
+            .map(r=>`<option ${r===s.role?"selected":""}>${r}</option>`).join("")}
+        </select>
+      </div>`;
+  });
 }
 </script>
-
 </body>
 </html>

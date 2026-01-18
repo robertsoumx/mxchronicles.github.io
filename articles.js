@@ -1,38 +1,77 @@
-const articles = {
-  "industrial-cities": {
-    title: "The Rise of Industrial Cities",
-    author: "MX Chronicles Staff",
-    date: "March 1892",
-    issue: "Vol.1, No.2",
-    image: "https://images.unsplash.com/photo-1549893074-0a6bcd4f6f52",
-    caption: "Factories in the 19th century",
-    content: "<p>The industrial city reshaped society with factories, railroads, and mass migration...</p>"
-  },
-  "ancient-trade": {
-    title: "Ancient Trade Routes",
-    author: "Historical Desk",
-    date: "120 BCE",
-    issue: "Vol.1, No.1",
-    image: "https://images.unsplash.com/photo-1518182230945-b1bbd7761f31",
-    caption: "Ancient caravan route",
-    content: "<p>Long-forgotten highways connected empires, spreading commerce and culture...</p>"
-  },
-  "urban-life": {
-    title: "Urban Life and Labor",
-    author: "MX Chronicles Staff",
-    date: "1887",
-    issue: "Vol.1, No.1",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e",
-    caption: "City tenements",
-    content: "<p>Daily life inside factories and crowded tenements of the 19th century metropolis...</p>"
-  },
-  "industrial-progress": {
-    title: "Industrial Progress and Society",
-    author: "MX Chronicles Staff",
-    date: "1890",
-    issue: "Vol.1, No.3",
-    image: "https://images.unsplash.com/photo-1506015391300-4802a9a8533c",
-    caption: "Industrial Revolution",
-    content: "<p>Industrialization influenced politics, culture, and urban life, reshaping societies...</p>"
+// articles.js
+
+// Renders all articles in a 3-column grid with search/filter functionality
+function renderArticles() {
+  const grid = document.getElementById("articles-grid");
+  if (!grid) return;
+
+  // Get search box and issue filter elements
+  const searchBox = document.getElementById("search-box");
+  const filterIssue = document.getElementById("filter-issue");
+
+  // Dynamically populate issue dropdown
+  const allIssues = [...new Set(Object.values(articles).map(a => a.issue))].sort((a,b)=>a-b);
+  filterIssue.innerHTML = '<option value="">All Issues</option>' +
+    allIssues.map(i=>`<option value="${i}">Issue ${i}</option>`).join('');
+
+  // Function to display filtered articles
+  function displayArticles() {
+    const query = searchBox.value.toLowerCase();
+    const selectedIssue = filterIssue.value;
+    grid.innerHTML = '';
+
+    Object.entries(articles).forEach(([id,a])=>{
+      // Filter by issue
+      if(selectedIssue && a.issue != selectedIssue) return;
+
+      // Filter by query
+      const combinedText = `${a.title} ${a.author} ${a.content}`.toLowerCase();
+      if(query && !combinedText.includes(query)) return;
+
+      // Create article card
+      const card = document.createElement('div');
+      card.className = 'article-card';
+      card.onclick = () => openArticle(id);
+      card.innerHTML = `
+        <h2 class="article-title">${a.title.toUpperCase()}</h2>
+        <div class="article-meta">By ${a.author} · ${a.date} · Issue ${a.issue}</div>
+        ${a.image ? `<img src="${a.image}" alt="${a.title}">` : ''}
+        <p class="article-synopsis">${a.content.slice(0, 180)}...</p>
+      `;
+      grid.appendChild(card);
+    });
   }
-};
+
+  // Attach events
+  searchBox.addEventListener('input', displayArticles);
+  filterIssue.addEventListener('change', displayArticles);
+
+  // Initial render
+  displayArticles();
+}
+
+// Open article page
+function openArticle(id){
+  // Store selected article in localStorage to load on article.html
+  localStorage.setItem('currentArticle', id);
+  window.location.href = 'article.html';
+}
+
+// Function to render a single article on article.html
+function renderArticlePage(){
+  const articleId = localStorage.getItem('currentArticle');
+  if(!articleId || !articles[articleId]) return;
+
+  const a = articles[articleId];
+  const container = document.getElementById('article-container');
+  if(!container) return;
+
+  container.innerHTML = `
+    <div class="article-page">
+      <h1 class="article-title">${a.title.toUpperCase()}</h1>
+      <div class="article-meta">By ${a.author} · ${a.date} · Issue ${a.issue}</div>
+      ${a.image ? `<img src="${a.image}" alt="${a.title}">` : ''}
+      <p class="article-content">${a.content}</p>
+    </div>
+  `;
+}

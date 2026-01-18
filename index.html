@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
 </head>
-
 <body>
+
 <header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
   <nav class="top-nav">
@@ -18,29 +18,50 @@
   </nav>
 </header>
 
-<div class="home-grid">
+<div class="home-layout">
   <aside class="issue-panel">
-    <div class="issue-number" id="issueNum">1</div>
+    <div class="issue-number" id="issueNum"></div>
     <div class="issue-theme" id="issueTheme"></div>
+    <button onclick="prevIssue()">← PREV</button>
+    <button onclick="nextIssue()">NEXT →</button>
   </aside>
 
-  <section class="article-list" id="homeArticles"></section>
+  <section class="article-field" id="articleField"></section>
+
+  <aside></aside>
 </div>
 
 <script>
-const issue = 1;
-document.getElementById("issueTheme").textContent =
-  issues.find(i => i.number === issue).theme;
+let currentIssue = 1;
 
-document.getElementById("homeArticles").innerHTML =
-  articles.filter(a => a.issue === issue).map(a => `
-    <a class="article-card" href="article.html?id=${a.id}">
-      <h3 class="article-title">${a.title}</h3>
-      <div class="article-meta">${a.author} · ${a.date}</div>
-      <img src="${a.image}">
-      <p class="article-synopsis">${a.synopsis}</p>
-    </a>
-  `).join("");
+function renderIssue() {
+  const issue = issues.find(i => i.number === currentIssue);
+  document.getElementById("issueNum").textContent = issue.number;
+  document.getElementById("issueTheme").textContent = issue.theme;
+
+  document.getElementById("articleField").innerHTML =
+    articles.filter(a => a.issue === currentIssue)
+      .map(a => `
+        <a class="article-card" href="article.html?id=${a.id}">
+          <div class="article-title">${a.title}</div>
+          <div class="article-meta">${a.author} · ${a.date}</div>
+          <img src="${a.image}">
+          <div class="article-synopsis">${a.synopsis}</div>
+        </a>
+      `).join("");
+}
+
+function prevIssue() {
+  if (currentIssue > 1) currentIssue--;
+  renderIssue();
+}
+
+function nextIssue() {
+  if (issues.find(i => i.number === currentIssue + 1)) currentIssue++;
+  renderIssue();
+}
+
+renderIssue();
 </script>
 </body>
 </html>

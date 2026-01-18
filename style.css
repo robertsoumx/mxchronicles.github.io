@@ -151,3 +151,22 @@ body {
   font-family: "Source Sans 3", sans-serif;
 }
 
+.paper-section {
+  padding: 3rem;
+  background:
+    linear-gradient(rgba(255,255,255,0.85),rgba(255,255,255,0.75)),
+    url("https://www.transparenttextures.com/patterns/newsprint.png");
+}
+
+.staff-entry {
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px dashed rgba(139,0,0,0.4);
+  padding:0.6rem 0;
+}
+
+.article-listing {
+  margin:1rem 0;
+  padding-bottom:0.6rem;
+  border-bottom:1px solid rgba(139,0,0,0.3);
+}

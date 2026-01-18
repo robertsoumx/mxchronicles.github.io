@@ -6,26 +6,77 @@
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
 </head>
-
 <body>
+
 <header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
   <nav class="top-nav">
     <a href="index.html">HOME</a>
     <a href="articles.html">ARTICLES</a>
     <a href="about.html">ABOUT</a>
-    <a href="staff.html">STAFF PORTAL</a>
+    <a href="staff.html" class="active">STAFF PORTAL</a>
   </nav>
 </header>
 
-<section class="section-paper">
-  <h2>Staff</h2>
-  <ul id="staffManage"></ul>
-</section>
+<main class="section-paper">
+  <section id="login">
+    <h2>Staff Login</h2>
+    <input type="password" id="pass" placeholder="Enter password">
+    <button onclick="login()">Enter</button>
+    <p id="err"></p>
+  </section>
+
+  <section id="dashboard" hidden>
+    <h2>Manage Issues</h2>
+    <div id="issueList"></div>
+
+    <h2>Manage Staff</h2>
+    <div id="staffManage"></div>
+
+    <h2>Manage Articles</h2>
+    <div id="articleManage"></div>
+  </section>
+</main>
 
 <script>
-document.getElementById("staffManage").innerHTML =
-  staff.map(s => `<li>${s.name} — ${s.role}</li>`).join("");
+const PASSWORD = "26MXChronicles";
+
+function login() {
+  if(pass.value === PASSWORD){
+    login.hidden = true;
+    dashboard.hidden = false;
+    renderDashboard();
+  } else err.textContent = "Incorrect password";
+}
+
+function renderDashboard() {
+  // Issues
+  issueList.innerHTML = issues.map(i => `
+    <div><strong>Issue ${i.number}</strong>: ${i.theme}</div>
+  `).join("");
+
+  // Staff
+  staffManage.innerHTML = staff.map((s,i) => `
+    <div>
+      ${s.name} 
+      <select onchange="staff[${i}].role=this.value">
+        ${["Editorial Lead","Senior Writer","Writer","Historian","Contributor"]
+          .map(r=>`<option ${r===s.role?"selected":""}>${r}</option>`).join("")}
+      </select>
+    </div>
+  `).join("");
+
+  // Articles
+  articleManage.innerHTML = articles.map(a => `
+    <div>
+      <a href="article.html?id=${a.id}" target="_blank">${a.title}</a>
+      <select onchange="articles.find(x=>x.id===${a.id}).featured=this.value==='true'">
+        <option value="true" ${a.featured?'selected':''}>Featured</option>
+        <option value="false" ${!a.featured?'selected':''}>Unfeature</option>
+      </select>
+    </div>
+  `).join("");
+}
 </script>
 </body>
 </html>

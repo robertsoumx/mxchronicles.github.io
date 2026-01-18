@@ -6,26 +6,34 @@
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
 </head>
-
 <body>
+
 <header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
   <nav class="top-nav">
     <a href="index.html">HOME</a>
     <a href="articles.html">ARTICLES</a>
-    <a href="about.html">ABOUT</a>
+    <a href="about.html" class="active">ABOUT</a>
     <a href="staff.html">STAFF PORTAL</a>
   </nav>
 </header>
 
 <section class="section-paper">
-  <p>MX Chronicles is a historically focused journal.</p>
+  <h2>About MX Chronicles</h2>
+  <p>
+    MX Chronicles is a historically focused journal dedicated to rigorous scholarship,
+    narrative storytelling, and preserving historical memory.
+  </p>
+
+  <h3>Staff</h3>
   <ul id="staffList"></ul>
 </section>
 
 <script>
-document.getElementById("staffList").innerHTML =
-  staff.map(s => `<li>${s.name} — ${s.role}</li>`).join("");
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("staffList").innerHTML =
+    staff.map(s => `<li>${s.name} — ${s.role}</li>`).join("");
+});
 </script>
 </body>
 </html>

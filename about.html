@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MX Chronicles · About</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="data.js" defer></script>
+<meta charset="UTF-8">
+<title>MX Chronicles · About</title>
+<link rel="stylesheet" href="style.css">
+<script src="data.js" defer></script>
 </head>
+
 <body>
-<header class="site-header">
+<header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
-  <nav class="nav-tabs">
+  <nav class="top-nav">
     <a href="index.html">HOME</a>
     <a href="articles.html">ARTICLES</a>
     <a href="about.html" class="active">ABOUT</a>
@@ -18,29 +18,25 @@
   </nav>
 </header>
 
-<main id="about-container">
-  <section class="issue-section">
-    <div class="issue-overlay">
-      <h2>ABOUT MX CHRONICLES</h2>
-      <p>MX Chronicles is a historical journal dedicated to uncovering the past with in-depth articles and essays.</p>
-      <h3>STAFF</h3>
-      <div id="about-staff-list"></div>
-    </div>
-  </section>
+<main class="paper-section">
+<h2>ABOUT MX CHRONICLES</h2>
+<p>
+MX Chronicles is a historical journal dedicated to examining the past through
+rigorous scholarship and narrative reporting.
+</p>
+
+<h3>STAFF</h3>
+<div id="staff"></div>
 </main>
 
 <script>
-function renderAboutStaff(){
-  const listContainer=document.getElementById('about-staff-list');
-  listContainer.innerHTML='';
-  staff.forEach(name=>{
-    const div=document.createElement('div');
-    div.className='staff-name';
-    div.textContent=name;
-    listContainer.appendChild(div);
-  });
-}
-renderAboutStaff();
+staff.forEach(s=>{
+  staff.innerHTML+=`
+    <div class="staff-entry">
+      <strong>${s.name}</strong>
+      <span>${s.role}</span>
+    </div>`;
+});
 </script>
 </body>
 </html>

@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>About · MX Chronicles</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MX Chronicles · About</title>
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
+<script src="about.js" defer></script>
 </head>
-<body>
+<body onload="renderAbout()">
 
+<!-- TOP BAR -->
 <header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
   <nav class="top-nav">
@@ -18,22 +21,38 @@
   </nav>
 </header>
 
-<section class="section-paper">
-  <h2>About MX Chronicles</h2>
-  <p>
-    MX Chronicles is a historically focused journal dedicated to rigorous scholarship,
-    narrative storytelling, and preserving historical memory.
-  </p>
+<main style="padding:2rem; max-width:1200px; margin:auto;">
 
-  <h3>Staff</h3>
-  <ul id="staffList" class="staff-list"></ul>
-</section>
+  <!-- About Section -->
+  <section style="margin-bottom:3rem;">
+    <h1 class="article-title">ABOUT MX CHRONICLES</h1>
+    <p style="font-family: 'Roboto', sans-serif; font-size:1rem; line-height:1.6;">
+      MX Chronicles is a historical journal dedicated to exploring forgotten eras, colonial memory, and the artifacts that shaped early modern civilization.
+      We aim to provide readers with carefully curated articles, illustrations, and stories that bring history to life.
+    </p>
+  </section>
+
+  <!-- Staff Section -->
+  <section>
+    <h2 class="article-title">STAFF</h2>
+    <div id="staff-grid" class="article-grid"></div>
+  </section>
+
+</main>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const ul = document.getElementById("staffList");
-  ul.innerHTML = staff.map(s => `<li>${s.name} — ${s.role}</li>`).join("");
-});
+// Render About Page
+function renderAbout(){
+  const staffContainer = document.getElementById('staff-grid');
+  staffContainer.innerHTML = '';
+  staff.forEach((name)=>{
+    const div = document.createElement('div');
+    div.className = 'article-card';
+    div.style.textAlign = 'center';
+    div.innerHTML = `<h3 class="article-title">${name}</h3>`;
+    staffContainer.appendChild(div);
+  });
+}
 </script>
 
 </body>

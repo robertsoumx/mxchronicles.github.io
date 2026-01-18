@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MX Chronicles · Home</title>
+<title>MX Chronicles</title>
+
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
-<script src="script.js" defer></script>
+<script src="articles.js" defer></script>
 </head>
-<body onload="renderHome()">
 
-<!-- TOP BAR -->
+<body onload="renderHomePage()">
+
+<!-- TOP RED BAR -->
 <header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
   <nav class="top-nav">
@@ -21,84 +23,74 @@
   </nav>
 </header>
 
-<main class="homepage-layout">
+<!-- MAIN HOMEPAGE GRID -->
+<main class="home-layout">
 
-  <!-- LEFT SIDEBAR -->
-  <aside class="issue-sidebar" id="issue-sidebar">
-    <!-- Dynamically injected per issue -->
+  <!-- LEFT COLUMN: ISSUE INFO -->
+  <aside class="issue-panel">
+    <div class="issue-number">ISSUE <span id="issue-number">1</span></div>
+    <div class="issue-theme" id="issue-theme">
+      THE RISE AND FALL OF EARLY EMPIRES
+    </div>
   </aside>
 
-  <!-- ARTICLE FIELD -->
-  <section class="article-field" id="home-articles">
-    <!-- Articles injected dynamically -->
+  <!-- CENTER + RIGHT: ARTICLES -->
+  <section class="home-articles" id="home-articles">
+    <!-- dynamically injected -->
   </section>
 
 </main>
 
 <script>
-function renderHome(){
-  const sidebar = document.getElementById("issue-sidebar");
-  const container = document.getElementById("home-articles");
-  container.innerHTML = "";
-  sidebar.innerHTML = "";
+function renderHomePage(){
+  const articles = JSON.parse(localStorage.getItem('articles')) || {};
+  const container = document.getElementById('home-articles');
 
-  // Group articles by issue
+  // Group by issue
   const issues = {};
-  Object.entries(articles).forEach(([id,a])=>{
+  Object.values(articles).forEach(a=>{
     if(!issues[a.issue]) issues[a.issue] = [];
-    issues[a.issue].push({...a,id});
+    issues[a.issue].push(a);
   });
 
-  const issueKeys = Object.keys(issues).sort((a,b)=> b-a);
+  // Pick latest issue
+  const issueNumbers = Object.keys(issues).sort((a,b)=>b-a);
+  const currentIssue = issueNumbers[0];
+  document.getElementById('issue-number').textContent = currentIssue;
 
-  issueKeys.forEach((issueNum, idx)=>{
-    const currentArticles = issues[issueNum];
+  // Optional: hardcoded themes per issue
+  const themes = {
+    1: "THE RISE AND FALL OF EARLY EMPIRES",
+    2: "REVOLUTIONS THAT SHAPED MODERNITY"
+  };
+  document.getElementById('issue-theme').textContent =
+    themes[currentIssue] || "A HISTORICAL EXAMINATION";
 
-    // LEFT SIDEBAR content (theme for first issue only for simplicity)
-    if(idx===0){
-      sidebar.innerHTML = `
-        <div class="issue-number">ISSUE<br><span>${parseInt(issueNum)}</span></div>
-        <div class="issue-theme">
-          <h3>THEME</h3>
-          <p>
-            A deep exploration of forgotten eras, colonial memory, and artifacts
-            that shaped early modern civilization.
-          </p>
-        </div>
-      `;
-    }
+  container.innerHTML = '';
 
-    // ARTICLE FIELD — irregular layout per issue
-    currentArticles.forEach((a,i)=>{
-      const artDiv = document.createElement("article");
-      artDiv.className = "article-card irregular-card";
-      artDiv.onclick = ()=>openArticle(a.id);
+  // Layout logic: featured articles span wide
+  issues[currentIssue].forEach((a, idx)=>{
+    const article = document.createElement('article');
+    article.className = a.featured
+      ? 'home-article featured'
+      : 'home-article standard';
 
-      // Assign custom styles per article to make layout irregular
-      let styleStr = "";
-      if(a.featured){
-        styleStr = "grid-column: span 2; grid-row: span 2;";
-      } else if(i%3===0){
-        styleStr = "grid-column: span 1; grid-row: span 2;";
-      } else if(i%2===0){
-        styleStr = "grid-column: span 2; grid-row: span 1;";
-      } else {
-        styleStr = "grid-column: span 1; grid-row: span 1;";
-      }
+    article.onclick = () => openArticle(a.id);
 
-      artDiv.style.cssText = styleStr;
-
-      artDiv.innerHTML = `
-        <h2 class="article-title">${a.title.toUpperCase()}</h2>
-        <div class="article-meta">${a.author} · ${a.date}</div>
-        ${a.image?`<img src="${a.image}" alt="${a.title}">`:''}
-        <p class="article-synopsis">${a.content.slice(0,180)}...</p>
-      `;
-
-      container.appendChild(artDiv);
-    });
+    article.innerHTML = `
+      ${a.image ? `<img src="${a.image}" alt="${a.title}">` : ''}
+      <h2 class="article-title">${a.title.toUpperCase()}</h2>
+      <div class="article-meta">
+        ${a.author} · ${a.date}
+      </div>
+      <p class="article-synopsis">
+        ${a.content.slice(0,150)}...
+      </p>
+    `;
+    container.appendChild(article);
   });
 }
 </script>
+
 </body>
 </html>

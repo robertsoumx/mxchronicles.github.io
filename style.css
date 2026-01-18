@@ -1,3 +1,4 @@
+/* Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600&display=swap');
 
 body {
@@ -9,11 +10,11 @@ body {
   color: #1b1b1b;
 }
 
-/* TOP BAR */
+/* Top Bar */
 .top-bar {
   background: #8b0000;
   color: white;
-  padding: 1.2rem 2.5rem;
+  padding: 1.2rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,11 +30,11 @@ body {
   color: white;
   text-decoration: none;
   margin-left: 2.5rem;
+  font-weight: 600;
   font-size: 0.95rem;
-  letter-spacing: 0.14em;
 }
 
-/* HOME LAYOUT */
+/* Home Layout */
 .home-layout {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
@@ -54,11 +55,12 @@ body {
 }
 
 .issue-theme {
-  margin-top: 1rem;
   font-size: 1.3rem;
-  letter-spacing: 0.18em;
+  margin-top: 1rem;
+  letter-spacing: 0.12em;
 }
 
+/* Articles */
 .article-field {
   padding: 3rem;
   display: grid;
@@ -70,14 +72,14 @@ body {
   background:
     linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.78)),
     url("https://www.transparenttextures.com/patterns/newsprint.png");
-  padding: 1.4rem;
+  padding: 1.5rem;
   border-left: 4px solid rgba(139,0,0,0.7);
   cursor: pointer;
 }
 
 .article-card img {
   width: 100%;
-  max-height: 150px;
+  max-height: 140px;
   object-fit: cover;
   margin: 1rem 0;
   filter: sepia(15%);
@@ -98,7 +100,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* ARTICLE PAGE */
+/* Article Page */
 .article-paper {
   padding: 4rem;
   background:
@@ -113,7 +115,7 @@ body {
   line-height: 1.8;
 }
 
-/* STAFF / ABOUT */
+/* Staff & About Pages */
 .section-paper {
   padding: 4rem;
   background:

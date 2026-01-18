@@ -1,4 +1,4 @@
-const issues = [
+let issues = [
   { number: 1, theme: "FOUNDATIONS & REVOLUTION" },
   { number: 2, theme: "INDUSTRY & EMPIRE" }
 ];
@@ -15,12 +15,13 @@ let articles = [
     title: "THE FOUNDING DECADE",
     author: "Jane Historian",
     date: "March 1790",
-    image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f",
     synopsis: "How the early republic took shape after independence.",
+    image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f",
     content: `
       <p>The first decade of the republic was fragile and uncertain.</p>
-      <p>Institutions were young, and unity was far from guaranteed.</p>
-    `
+      <p>Institutions were young, unity incomplete, and the future unclear.</p>
+    `,
+    featured: true
   },
   {
     id: 2,
@@ -28,11 +29,12 @@ let articles = [
     title: "PRINT AND POWER",
     author: "Samuel Press",
     date: "April 1790",
-    image: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d",
     synopsis: "Pamphlets, newspapers, and the rise of public opinion.",
+    image: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d",
     content: `
-      <p>The printing press shaped the political imagination.</p>
+      <p>The printing press reshaped political imagination.</p>
       <p>Ideas traveled faster than armies.</p>
-    `
+    `,
+    featured: false
   }
 ];

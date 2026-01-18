@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>MX Chronicles · Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="style.css">
-  <script src="data.js" defer></script>
-  <script src="script.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MX Chronicles · Home</title>
+<link rel="stylesheet" href="style.css">
+<script src="data.js" defer></script>
+<script src="script.js" defer></script>
 </head>
-
 <body onload="renderHome()">
 
-<!-- TOP RED BAR -->
+<!-- TOP BAR -->
 <header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
   <nav class="top-nav">
@@ -23,55 +21,84 @@
   </nav>
 </header>
 
-<!-- MAIN PARTITION -->
 <main class="homepage-layout">
 
-  <!-- LEFT COLUMN -->
-  <aside class="issue-sidebar">
-    <div class="issue-number">ISSUE<br><span>02</span></div>
-    <div class="issue-theme">
-      <h3>THEME</h3>
-      <p>
-        A deep exploration of forgotten eras, colonial memory,
-        and the artifacts that shaped early modern civilization.
-      </p>
-    </div>
+  <!-- LEFT SIDEBAR -->
+  <aside class="issue-sidebar" id="issue-sidebar">
+    <!-- Dynamically injected per issue -->
   </aside>
 
-  <!-- CENTER + RIGHT -->
+  <!-- ARTICLE FIELD -->
   <section class="article-field" id="home-articles">
-    <!-- Articles injected -->
+    <!-- Articles injected dynamically -->
   </section>
 
 </main>
 
 <script>
-function renderHome() {
+function renderHome(){
+  const sidebar = document.getElementById("issue-sidebar");
   const container = document.getElementById("home-articles");
   container.innerHTML = "";
+  sidebar.innerHTML = "";
 
-  Object.entries(articles).forEach(([id, a], i) => {
-    const div = document.createElement("article");
-    div.className = "article-card";
-    div.onclick = () => openArticle(id);
+  // Group articles by issue
+  const issues = {};
+  Object.entries(articles).forEach(([id,a])=>{
+    if(!issues[a.issue]) issues[a.issue] = [];
+    issues[a.issue].push({...a,id});
+  });
 
-    div.style.gridArea =
-      i === 0 ? "feature" :
-      i === 1 ? "wide" :
-      i === 2 ? "tall" :
-      "normal";
+  const issueKeys = Object.keys(issues).sort((a,b)=> b-a);
 
-    div.innerHTML = `
-      <h2 class="article-title">${a.title.toUpperCase()}</h2>
-      <div class="article-meta">${a.author} · ${a.date}</div>
-      <img src="${a.image}" alt="${a.title}">
-      <p class="article-synopsis">${a.content.slice(0,180)}...</p>
-    `;
+  issueKeys.forEach((issueNum, idx)=>{
+    const currentArticles = issues[issueNum];
 
-    container.appendChild(div);
+    // LEFT SIDEBAR content (theme for first issue only for simplicity)
+    if(idx===0){
+      sidebar.innerHTML = `
+        <div class="issue-number">ISSUE<br><span>${parseInt(issueNum)}</span></div>
+        <div class="issue-theme">
+          <h3>THEME</h3>
+          <p>
+            A deep exploration of forgotten eras, colonial memory, and artifacts
+            that shaped early modern civilization.
+          </p>
+        </div>
+      `;
+    }
+
+    // ARTICLE FIELD — irregular layout per issue
+    currentArticles.forEach((a,i)=>{
+      const artDiv = document.createElement("article");
+      artDiv.className = "article-card irregular-card";
+      artDiv.onclick = ()=>openArticle(a.id);
+
+      // Assign custom styles per article to make layout irregular
+      let styleStr = "";
+      if(a.featured){
+        styleStr = "grid-column: span 2; grid-row: span 2;";
+      } else if(i%3===0){
+        styleStr = "grid-column: span 1; grid-row: span 2;";
+      } else if(i%2===0){
+        styleStr = "grid-column: span 2; grid-row: span 1;";
+      } else {
+        styleStr = "grid-column: span 1; grid-row: span 1;";
+      }
+
+      artDiv.style.cssText = styleStr;
+
+      artDiv.innerHTML = `
+        <h2 class="article-title">${a.title.toUpperCase()}</h2>
+        <div class="article-meta">${a.author} · ${a.date}</div>
+        ${a.image?`<img src="${a.image}" alt="${a.title}">`:''}
+        <p class="article-synopsis">${a.content.slice(0,180)}...</p>
+      `;
+
+      container.appendChild(artDiv);
+    });
   });
 }
 </script>
-
 </body>
 </html>

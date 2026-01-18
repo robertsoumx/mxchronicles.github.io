@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MX Chronicles · Articles</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="data.js" defer></script>
-  <script src="script.js" defer></script>
+<meta charset="UTF-8">
+<title>MX Chronicles · Articles</title>
+<link rel="stylesheet" href="style.css">
+<script src="data.js" defer></script>
 </head>
-<body onload="renderArticles()">
 
-<header class="site-header">
+<body>
+<header class="top-bar">
   <div class="masthead">MX CHRONICLES</div>
-  <nav class="nav-tabs">
+  <nav class="top-nav">
     <a href="index.html">HOME</a>
     <a href="articles.html" class="active">ARTICLES</a>
     <a href="about.html">ABOUT</a>
@@ -20,39 +18,19 @@
   </nav>
 </header>
 
-<main id="articles-container">
-  <!-- Articles rendered dynamically -->
-</main>
+<main class="paper-section">
+<h2>ARTICLES</h2>
 
 <script>
-function renderArticles(){
-  const container=document.getElementById('articles-container');
-  container.innerHTML='';
-  const section = document.createElement('section');
-  section.className='issue-section';
-  const overlay = document.createElement('div');
-  overlay.className='issue-overlay';
-  overlay.innerHTML='<h2>ALL ARTICLES</h2>';
-  const layout=document.createElement('div');
-  layout.className='issue-layout';
-  const layoutAreas=['feature','side1','side2','side3','side4'];
-  Object.entries(articles).forEach(([id,a],i)=>{
-    const artDiv=document.createElement('div');
-    artDiv.className='article-block';
-    artDiv.onclick=()=>openArticle(id);
-    artDiv.style.gridArea=layoutAreas[i%layoutAreas.length];
-    artDiv.innerHTML=`
-      <h3 class="article-title">${a.title}</h3>
-      <div class="meta">${a.author} · ${a.date}</div>
-      ${a.image?`<img src="${a.image}" alt="${a.title}">`:''}
-      <p class="synopsis">${a.content.substring(0,200)}...</p>
-    `;
-    layout.appendChild(artDiv);
-  });
-  overlay.appendChild(layout);
-  section.appendChild(overlay);
-  container.appendChild(section);
-}
+articles.forEach(a=>{
+  document.write(`
+    <div class="article-listing">
+      <strong>${a.title}</strong>
+      <span>Issue ${a.issue} · ${a.author} · ${a.date}</span>
+    </div>
+  `);
+});
 </script>
+</main>
 </body>
 </html>

@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>MX Chronicles · Article</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Article · MX Chronicles</title>
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
 </head>
@@ -19,33 +18,18 @@
   </nav>
 </header>
 
-<main class="article-paper">
-  <article id="article"></article>
-</main>
+<main class="article-paper" id="article"></main>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const id = Number(params.get("id"));
-const article = articles.find(a => a.id === id);
+const id = Number(new URLSearchParams(location.search).get("id"));
+const a = articles.find(x => x.id === id);
 
-if (!article) {
-  document.getElementById("article").innerHTML =
-    "<h2>Article not found</h2>";
-} else {
-  document.getElementById("article").innerHTML = `
-    <h1 class="article-title">${article.title.toUpperCase()}</h1>
-
-    <div class="article-meta">
-      ISSUE ${article.issue} · ${article.author} · ${article.date}
-    </div>
-
-    <img src="${article.image}" class="article-image">
-
-    <div class="article-body">
-      ${article.content}
-    </div>
-  `;
-}
+document.getElementById("article").innerHTML = `
+  <h1 class="article-title">${a.title}</h1>
+  <div class="article-meta">Issue ${a.issue} · ${a.author} · ${a.date}</div>
+  <img src="${a.image}" style="width:100%;margin:2rem 0">
+  <div class="article-body">${a.content}</div>
+`;
 </script>
 </body>
 </html>

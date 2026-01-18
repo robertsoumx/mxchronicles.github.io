@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>MX Chronicles · Articles</title>
+<title>Articles · MX Chronicles</title>
 <link rel="stylesheet" href="style.css">
 <script src="data.js" defer></script>
 </head>
@@ -12,25 +12,26 @@
   <div class="masthead">MX CHRONICLES</div>
   <nav class="top-nav">
     <a href="index.html">HOME</a>
-    <a href="articles.html" class="active">ARTICLES</a>
+    <a href="articles.html">ARTICLES</a>
     <a href="about.html">ABOUT</a>
     <a href="staff.html">STAFF PORTAL</a>
   </nav>
 </header>
 
-<main class="paper-section">
-<h2>ARTICLES</h2>
+<section class="section-paper">
+  <div id="articleList"></div>
+</section>
 
 <script>
-articles.forEach(a=>{
-  document.write(`
-    <div class="article-listing">
-      <strong>${a.title}</strong>
-      <span>Issue ${a.issue} · ${a.author} · ${a.date}</span>
-    </div>
-  `);
-});
+document.getElementById("articleList").innerHTML =
+  articles.map(a => `
+    <p>
+      <a href="article.html?id=${a.id}">
+        <strong>${a.title}</strong>
+      </a>
+      — Issue ${a.issue}, ${a.author}, ${a.date}
+    </p>
+  `).join("");
 </script>
-</main>
 </body>
 </html>
